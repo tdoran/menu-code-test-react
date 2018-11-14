@@ -38,6 +38,8 @@ class Menu extends Component {
         return {
           orders: prevState.orders.filter(order => order.id !== dish.id)
         }
+      }, () => {
+        this.updateTotal()
       })
     }
     dish.customerId = customerId;
