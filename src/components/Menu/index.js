@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 
 // import MenuItem from "../MenuItem"
 
-import { Title, Container, CourseHeader, MenuItem, MenuBoard, CheckoutButton, ResetButton } from "./index.styles"
+import { Title, Container, CourseHeader, MenuItem, MenuBoard, CheckoutButton, ResetButton, ErrorBanner, ErrorFiller } from "./index.styles"
 
 
 import menuItems from "../../../menu-data.json"
@@ -15,7 +15,8 @@ class Menu extends Component {
       orders: [],
       total: 0,
       currentCustomer: 1,
-      completedOrders: []
+      completedOrders: [],
+      error: null
     };
   }
 
@@ -28,11 +29,13 @@ class Menu extends Component {
       orders: [],
       total: 0,
       currentCustomer: 1,
-      completedOrders: []
+      completedOrders: [],
+      error: null
     })
   }
 
   selectDish(customerId, dish) {
+    this.setState({ error: null })
     if (this.state.orders.filter(order => order.id === dish.id).length > 0) {
       return this.setState(prevState => {
         return {
@@ -62,16 +65,17 @@ class Menu extends Component {
   proceedToCheckout() {
     switch (this.checkOrders()) {
       case "onlyOne":
-        alert("Please select more than one dish to order.")
+        this.setState({ error: "Please select more than one dish to order." })
         break;
       case "noMain":
-        alert("Please select a main course to order.")
+        this.setState({ error: "Please select a main course to order." })
         break;
       case "multipleCourse":
-        alert("Please select no more than one of each course.")
+        this.setState({ error: "Please select no more than one of each course." })
+
         break;
       case "pierreWontAllow":
-        alert("Excusé moi - you simply cannot have prawn and salmon!.")
+        this.setState({ error: "Excusé moi - you simply cannot have prawn and salmon!." })
         break;
       default:
         this.setState(prevState => {
@@ -82,6 +86,7 @@ class Menu extends Component {
             orders: []
           }
         })
+        this.setState({ error: null })
         alert("Thank you for your order!")
     }
   }
@@ -120,12 +125,17 @@ class Menu extends Component {
     return (
       <Fragment>
         <Container>
+
           <Title>
             OpenTable
           </Title>
+
           <p>Customer 1 - Order {this.state.completedOrders.includes(1) ? "completed" : "pending"}</p>
           <p>Customer 2 - Order {this.state.completedOrders.includes(2) ? "completed" : "pending"}</p>
+
           <ResetButton onClick={() => this.reset()}> Reset</ResetButton>
+
+          {this.state.error ? (<ErrorBanner>{this.state.error}</ErrorBanner>) : (<ErrorFiller> Fillertext</ErrorFiller>)}
           <MenuBoard>
             <CourseHeader>
               Starters

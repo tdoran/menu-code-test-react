@@ -53,3 +53,14 @@ export const ResetButton = styled.button`
 background-color: #e74c3c;
 color: #fff;
 `;
+
+export const ErrorBanner = styled.div`
+width: 100%;
+background-color: #e74c3c;
+color: #fff;
+`;
+
+export const ErrorFiller = styled.div`
+visibility: hidden;
+`;
+
