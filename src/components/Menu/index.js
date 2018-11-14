@@ -1,10 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { render } from 'react-dom';
 
-// import MenuItem from "../MenuItem"
-
 import { Title, Container, CourseHeader, MenuItem, MenuBoard, CheckoutButton, ResetButton, ErrorBanner, ErrorFiller } from "./index.styles"
-
 
 import menuItems from "../../../menu-data.json"
 
