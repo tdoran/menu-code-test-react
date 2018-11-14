@@ -1,9 +1,10 @@
 import React from 'react';
 import { render } from 'react-dom';
+import Menu from "./components/Menu"
 
 class App extends React.Component {
     render() {
-        return <h1>Menu Test</h1>;
+        return < Menu />;
     }
 }
 
