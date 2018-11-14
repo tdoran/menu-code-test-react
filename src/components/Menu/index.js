@@ -33,6 +33,13 @@ class Menu extends Component {
   }
 
   selectDish(customerId, dish) {
+    if (this.state.orders.filter(order => order.id === dish.id).length > 0) {
+      return this.setState(prevState => {
+        return {
+          orders: prevState.orders.filter(order => order.id !== dish.id)
+        }
+      })
+    }
     dish.customerId = customerId;
     dish.course = dish.id < 5 ? "starter" : dish.id < 9 ? "main" : "dessert";
     this.setState(prevState => {
